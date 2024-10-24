@@ -1,10 +1,14 @@
-export interface User {
+export interface UserEntity {
   id: string
   name: string
   email: string
-  age: number
-  address: string
-  isActive: boolean
+  password: string
+}
+
+export interface RolesEntity {
+  id: string
+  name: string
+  description: string
   createdAt: Date
   updatedAt: Date
 }
