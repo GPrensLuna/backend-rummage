@@ -1,0 +1,62 @@
+
+# Ignorar dependencias de terceros
+node_modules/
+
+# Ignorar directorios de salida y compilación
+dist/
+build/
+
+# Ignorar directorios de pruebas
+coverage/
+
+# Ignorar archivos temporales y logs
+*.log
+*.tmp
+
+# Ignorar configuraciones y archivos de integración o herramientas de construcción
+*.json
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+tsconfig.json
+tsconfig.build.json
+webpack.config.js
+prettier.config.js
+
+# Ignorar directorios específicos de entorno de desarrollo
+.env
+.env.local
+.env.*.local
+
+# Ignorar archivos de la base de datos temporal o de caché
+db.sqlite
+*.sql
+*.db
+
+# Ignorar archivos generados automáticamente
+*.map
+
+# Ignorar archivos específicos de IDEs y editores
+.vscode/
+.idea/
+
+# Ignorar carpetas de pruebas unitarias o de integración
+tests/
+test/
+__tests__/
+
+# Ignorar directorios específicos de documentación y ejemplos
+docs/
+examples/
+
+# Ignorar archivos y directorios específicos de una estructura particular
+src/**/*.test.ts
+src/**/*.test.js
+src/**/*.spec.ts
+src/**/*.spec.js
+
+# Otros archivos a excluir de linting
+*.bak
+*.swp
+*.swo
+

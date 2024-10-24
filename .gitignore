@@ -1,0 +1,112 @@
+
+# Node.js
+node_modules/
+npm-debug.log
+package-lock.json
+yarn-error.log
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+env/
+venv/
+*.egg-info/
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+target/
+*.log
+.idea/
+*.iml
+
+# Ruby
+*.gem
+*.rbc
+.bundle/
+vendor/
+log/
+
+# PHP
+/vendor/
+*.log
+.env
+
+# Go
+/bin/
+*.exe
+*.test
+
+# C/C++
+*.o
+*.out
+*.exe
+*.class
+*.dSYM/
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userprefs
+*.sln.ide
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+
+# Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# IDEs
+.idea/
+*.sublime-workspace
+*.sublime-project
+*.vscode/
+
+# Other
+*.log
+*.tmp
+*.bak
+*.swp
+*.swm
+*.swo
+
+# Environment variables
+.env
+*.local
+
+# Build directories
+build/
+dist/
+out/
+
+# Documentation
+*.pdf
+*.doc
+*.docx
+*.ppt
+*.pptx
+
+# Coverage
+coverage/
+*.cover
+*.lcov
+
+# Test files
+test-results/
+*.test.js
+*.spec.js
+
+# Git
+*.orig
+*.patch
+
