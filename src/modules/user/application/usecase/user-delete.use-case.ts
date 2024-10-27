@@ -1,10 +1,7 @@
 import { Inject, Injectable, Logger } from '@nestjs/common'
 import { ReqUserDeleteDto, ResUserDeleteDto } from '../../application/dtos'
 
-import {
-  UserDeleteService,
-  UserValidationDeletedService,
-} from '../../domain/services'
+import { UserDeleteService } from '../../domain/services'
 
 @Injectable()
 export class UserDeleteUseCase {
@@ -12,8 +9,6 @@ export class UserDeleteUseCase {
   public constructor(
     @Inject(UserDeleteService)
     private readonly userDeleteService: UserDeleteService,
-    @Inject(UserValidationDeletedService)
-    private readonly userValidationDeletedService: UserValidationDeletedService,
   ) {}
 
   public async deleteUser(
@@ -21,7 +16,6 @@ export class UserDeleteUseCase {
   ): Promise<ResUserDeleteDto> {
     this.logger.log('Input' + JSON.stringify(reqUserDelete))
 
-    await this.userValidationDeletedService.validateDeleted(reqUserDelete)
     return this.userDeleteService.deleteUser(reqUserDelete)
   }
 }
