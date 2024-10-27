@@ -1,0 +1,7 @@
+export * from './user-prisma-by-email.repository'
+export * from './user-prisma-create.repository'
+export * from './user-prisma-delete.repository'
+export * from './user-prisma-get-all.repository'
+export * from './user-prisma-update.repository'
+export * from './user-validate-delete-prisma.repository'
+export * from './user-validate-email-prisma.repository'

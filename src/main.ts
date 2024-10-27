@@ -1,9 +1,17 @@
 import { NestFactory } from '@nestjs/core'
-import { AppModule } from './app.module'
+import { createValidationPipe } from './common/pipes'
+import { configureApp } from './config'
+import { APP_CONSTANT } from './common/constant'
+import { AppModule } from './modules'
 
-const PORT = 3000
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule)
-  await app.listen(PORT)
+
+  configureApp(app)
+
+  app.useGlobalPipes(createValidationPipe())
+
+  await app.listen(APP_CONSTANT.PORT)
 }
+
 void bootstrap()

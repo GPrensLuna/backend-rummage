@@ -1,0 +1,31 @@
+### Create user
+POST http://localhost:3000/user
+Content-Type: application/json
+
+{
+  "name": "test",
+  "email": "test1@test.com",
+  "password": "Test#1"
+}
+
+### Get user email query params
+GET http://localhost:3000/user/email?email=test@test.com
+Content-Type: application/json
+
+### Get user all
+GET http://localhost:3000/user
+Content-Type: application/json
+
+### Update user
+PUT http://localhost:3000/user/1
+Content-Type: application/json
+
+{
+  "name": "Kamil",
+  "email": "kamil@gmail.com",
+  "password": "123456"
+}
+
+### Delete user
+DELETE http://localhost:3000/user/email?email=test@test.com
+Content-Type: application/json
