@@ -1,5 +1,5 @@
 ### SignUp
-POST http://localhost:3000/auth/sign-up
+POST http://localhost:3000/api/v1/auth/sign-up
 Content-Type: application/json
 
 {
@@ -10,10 +10,15 @@ Content-Type: application/json
 }
 
 ### SignIn
-POST http://localhost:3000/auth/sign-in
+POST http://localhost:3000/api/v1/auth/sign-in
 Content-Type: application/json
 
 {
   "email": "test1@test.com",
   "password": "Test#1"
 }
+### Prueba de Profile
+GET http://localhost:3000/api/v1/auth/Profile
+Content-Type: application/json
+
+

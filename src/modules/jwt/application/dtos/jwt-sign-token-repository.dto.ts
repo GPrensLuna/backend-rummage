@@ -1,12 +1,10 @@
-import type { JwtEntity } from '../../domain/entities'
+import type { UserEntity } from '../../domain/entities'
 
 export class ReqJwtSignTokenDto {
-  public payload: Pick<JwtEntity, 'email' | 'id'>
-  public id: string
+  public payload: Pick<UserEntity, 'id' | 'email' | 'name'>
 
-  public constructor(email: string, id: string) {
-    this.payload = { email: email, id: id }
-    this.id = id
+  public constructor(id: string, email: string, name: string) {
+    this.payload = { id, email, name }
   }
 }
 

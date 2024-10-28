@@ -1,8 +1,5 @@
-/* eslint-disable @typescript-eslint/no-magic-numbers */
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
-/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import { Inject, Injectable, Logger } from '@nestjs/common'
-import { ReqAuthSignInDto, ResUserByEmailDto } from '../dtos'
+import { ReqAuthSignInDto } from '../dtos'
 import { Response } from 'express'
 import {
   UserValidationDeletedService,
@@ -13,6 +10,8 @@ import { JwtSignTokenService } from 'src/modules/jwt/domain/services'
 import { ReqJwtSignTokenDto } from 'src/modules/jwt/application/dtos'
 import { UserByEmailUseCase } from 'src/modules/user/application/usecase'
 
+const SECOND = 1000
+const MINUTE = 60
 @Injectable()
 export class AuthSignInUseCase {
   private readonly logger = new Logger(AuthSignInUseCase.name)
@@ -46,17 +45,13 @@ export class AuthSignInUseCase {
       reqAuthSignInDto,
     )
 
-    const signIn: ResUserByEmailDto | null | undefined =
+    const signIn =
       await this.userByEmailUseCase.getUserByEmail(reqAuthSignInDto)
 
-    if (!signIn) {
-      this.logger.error('AuthSignInUseCase - Error: Usuario no encontrado')
-      throw new Error('Usuario no encontrado')
-    }
-
     const reqJwtSignTokenDto = new ReqJwtSignTokenDto(
-      signIn.data.email,
       signIn.data.id,
+      signIn.data.email,
+      signIn.data.name,
     )
     const { accessToken } =
       this.jwtSignTokenService.signToken(reqJwtSignTokenDto)
@@ -64,7 +59,7 @@ export class AuthSignInUseCase {
     res.cookie('accessToken', accessToken, {
       httpOnly: true,
       secure: process.env['NODE_ENV'] === 'production',
-      maxAge: 60 * 60 * 1000,
+      maxAge: MINUTE * MINUTE * SECOND,
     })
 
     this.logger.log('SignIn: Cookie accessToken establecida')

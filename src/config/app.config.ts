@@ -1,6 +1,6 @@
 import type { INestApplication } from '@nestjs/common'
 import cookieParser from 'cookie-parser'
-//import { APP_CONSTANT } from 'src/common/constant'
+import { APP_CONSTANT } from 'src/common/constant'
 
 export const configureApp = (app: INestApplication): void => {
   app.enableCors({
@@ -11,5 +11,5 @@ export const configureApp = (app: INestApplication): void => {
 
   app.use(cookieParser())
 
-  //app.setGlobalPrefix(APP_CONSTANT.API_VERSION)
+  app.setGlobalPrefix(APP_CONSTANT.API_VERSION)
 }

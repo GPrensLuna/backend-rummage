@@ -16,12 +16,7 @@ export class JwtSignTokenRepository
 
   public signToken(reqJwtSignTokenDto: ReqJwtSignTokenDto): ResJwtSignTokenDto {
     try {
-      const payload = {
-        sub: reqJwtSignTokenDto.id,
-        email: reqJwtSignTokenDto.payload.email,
-      }
-
-      const token = this.jwtService.sign(payload)
+      const token = this.jwtService.sign(reqJwtSignTokenDto.payload)
 
       return { accessToken: token }
     } catch {

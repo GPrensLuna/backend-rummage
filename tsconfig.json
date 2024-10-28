@@ -32,7 +32,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "typeRoots": ["./node_modules/@types", "./src/@types"],
+    "typeRoots": ["./node_modules/@types", "./src/@types/**/*.d.ts",],
     "lib": ["ES2021", "DOM"],
     "incremental": true,
     "noEmitOnError": true,
@@ -43,7 +43,8 @@
     "suppressImplicitAnyIndexErrors": false,
     "disableSizeLimit": true,
     "removeComments": true
+
   },
-  "include": ["src/**/*.ts", "src/@types/**/*.d.ts", "prettier.config.js", "package.json"],
+  "include": ["src/**/*.ts", "prettier.config.js", "package.json"],
   "exclude": ["node_modules", "dist", "package.json"]
 }

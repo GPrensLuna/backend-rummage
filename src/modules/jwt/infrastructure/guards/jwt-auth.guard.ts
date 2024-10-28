@@ -1,22 +1,23 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-magic-numbers */
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
   Injectable,
   Logger,
   type CanActivate,
   type ExecutionContext,
 } from '@nestjs/common'
-import { JwtVerifyTokenUseCase } from '../../application/usecase'
 import {
   ReqJwtVerifyTokenDto,
   TokenInvalid,
   TokenNotProvided,
 } from '../../application/dtos'
+import { JwtService } from '@nestjs/jwt'
 import { ExceptionError } from '../../../../common/exceptions'
 import { Reflector } from '@nestjs/core'
 import { IS_PUBLIC_KEY } from '../decorators'
+import { Request } from 'express'
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
@@ -24,25 +25,27 @@ export class JwtAuthGuard implements CanActivate {
 
   public constructor(
     private readonly reflector: Reflector,
-    private readonly jwtVerifyTokenService: JwtVerifyTokenUseCase,
+    private readonly jwtService: JwtService,
   ) {}
 
   public async canActivate(context: ExecutionContext): Promise<boolean> {
-    const request = context.switchToHttp().getRequest()
-    const token = this.extractTokenFromHeader(request as Request)
-
+    // Primero, revisa si la ruta es pública
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
       context.getHandler(),
       context.getClass(),
     ])
 
     if (isPublic) {
-      this.logger.log('Public route, no token verification needed.')
+      this.logger.log('Ruta pública, no se requiere verificación de token.')
       return true
     }
 
+    // Si no es pública, procede con la extracción y verificación del token
+    const request = context.switchToHttp().getRequest()
+    const token = this.extractTokenFromHeader(request as Request)
+
     if (!token) {
-      this.logger.warn('Token not provided.')
+      this.logger.warn('Token no proporcionado.')
       throw new ExceptionError(new TokenNotProvided())
     }
 
@@ -50,41 +53,48 @@ export class JwtAuthGuard implements CanActivate {
       const reqJwtVerifyTokenDto = new ReqJwtVerifyTokenDto()
       reqJwtVerifyTokenDto.token = token
 
-      const payload =
-        await this.jwtVerifyTokenService.verifyToken(reqJwtVerifyTokenDto)
+      const payload = await this.jwtService.verify(reqJwtVerifyTokenDto.token)
       request.user = payload
-      this.logger.log('Token verified successfully.')
+      this.logger.log('Token verificado con éxito.')
     } catch (error) {
-      this.logger.error('Token verification failed.', error)
+      this.logger.error('Falló la verificación del token.', error)
       throw new ExceptionError(new TokenInvalid())
     }
 
     return true
   }
 
-  private extractTokenFromHeader(request: Request): string | undefined {
-    const authHeader: string | null = request.headers.get('authorization')
+  private extractTokenFromHeader(request: Request): string {
+    const authHeader = request.headers.authorization
+    const cookieHeader = request.headers.cookie
+    let token: string | undefined
 
-    if (!authHeader) {
-      this.logger.warn('Authorization header is missing.')
-      return undefined
+    if (authHeader) {
+      const parts = authHeader.split(' ')
+      if (parts.length === 2 && parts[0] === 'Bearer') {
+        token = parts[1]
+        this.logger.log('Token extraído del header Authorization.')
+      } else {
+        this.logger.warn(
+          'El header Authorization está mal formado o el tipo de token no es Bearer.',
+        )
+        throw new ExceptionError(new TokenInvalid())
+      }
     }
 
-    const parts: string[] = authHeader.split(' ')
-
-    if (parts.length !== 2) {
-      this.logger.warn('Authorization header is malformed.')
-      return undefined
+    if (!token && cookieHeader) {
+      const cookieMatch = cookieHeader.match(/(?:^|;\s*)accessToken=([^;]*)/)
+      token = cookieMatch ? cookieMatch[1] : undefined
+      if (token) {
+        this.logger.log('Token extraído del header Cookie.')
+      }
     }
 
-    const [type, token] = parts
-
-    if (type === 'Bearer' && typeof token === 'string' && token.length > 0) {
-      this.logger.log('Token extracted from header.')
-      return token
+    if (!token) {
+      this.logger.warn('No se encontró token en los headers o cookies.')
+      throw new ExceptionError(new TokenNotProvided())
     }
 
-    this.logger.warn('Token type is not Bearer or token is invalid.')
-    return undefined
+    return token
   }
 }

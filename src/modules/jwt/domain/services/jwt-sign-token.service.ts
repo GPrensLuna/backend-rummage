@@ -18,7 +18,7 @@ export class JwtSignTokenService {
 
   public signToken(reqJwtSignTokenDto: ReqJwtSignTokenDto): ResJwtSignTokenDto {
     try {
-      this.logger.debug('Signing token', reqJwtSignTokenDto)
+      this.logger.log('Signing token', reqJwtSignTokenDto)
 
       return this.jwtSignTokenRepository.signToken(reqJwtSignTokenDto)
     } catch (error) {
