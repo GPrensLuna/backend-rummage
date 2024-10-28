@@ -1,0 +1,19 @@
+### SignUp
+POST http://localhost:3000/auth/sign-up
+Content-Type: application/json
+
+{
+  "name": "test0",
+  "email": "test@test0.com",
+  "password": "Test#1",
+
+}
+
+### SignIn
+POST http://localhost:3000/auth/sign-in
+Content-Type: application/json
+
+{
+  "email": "test1@test.com",
+  "password": "Test#1"
+}

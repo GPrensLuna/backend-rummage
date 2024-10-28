@@ -1,6 +1,9 @@
 import { Inject, Injectable, Logger } from '@nestjs/common'
 
-import { UserByEmailService } from '../../domain/services'
+import {
+  UserByEmailService,
+  UserValidationNotEmailService,
+} from '../../domain/services'
 import { InPutUserByEmailInterface } from '../../domain/interfaces'
 import { ReqUserByEmailDto, ResUserByEmailDto } from '../../application/dtos'
 
@@ -10,6 +13,7 @@ export class UserByEmailUseCase implements InPutUserByEmailInterface {
   public constructor(
     @Inject(UserByEmailService)
     private readonly userByEmailService: UserByEmailService,
+    private readonly userValidationNotEmailService: UserValidationNotEmailService,
   ) {}
 
   public async getUserByEmail(
@@ -17,6 +21,7 @@ export class UserByEmailUseCase implements InPutUserByEmailInterface {
   ): Promise<ResUserByEmailDto> {
     this.logger.log('Input' + JSON.stringify(reqUserByEmail))
 
+    await this.userValidationNotEmailService.validateNotEmail(reqUserByEmail)
     return this.userByEmailService.getUserByEmail(reqUserByEmail)
   }
 }

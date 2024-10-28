@@ -1,26 +1,33 @@
 import type {
+  ReqUserPasswordValidateDto,
   ReqUserValidateDto,
   ResUserValidateDto,
 } from '../../application/dtos'
 
-// * validation email
-export interface InPutUserValidationEmailInterface {
-  validationEmail: (reqUserValidate: ReqUserValidateDto) => Promise<void>
-}
-
+// * validation email existe
 export interface OutPutUserValidationEmailInterface {
   validationEmail: (
     reqUserValidate: ReqUserValidateDto,
   ) => Promise<ResUserValidateDto>
 }
 
-// * validation is deleted
-export interface InPutUserValidationIsDeletedInterface {
-  validateDeleted: (reqUserValidate: ReqUserValidateDto) => Promise<void>
+// * validation not email existe
+export interface OutPutUserValidationNotEmailInterface {
+  validateNotEmail: (
+    reqUserValidate: ReqUserValidateDto,
+  ) => Promise<ResUserValidateDto>
 }
 
+// * validation is deleted
 export interface OutPutUserValidationIsDeletedInterface {
   validateDeleted: (
     reqUserValidate: ReqUserValidateDto,
+  ) => Promise<ResUserValidateDto>
+}
+
+// * validation is password
+export interface OutPutUserValidationIsPasswordInterface {
+  validatePassword: (
+    reqUserValidate: ReqUserPasswordValidateDto,
   ) => Promise<ResUserValidateDto>
 }

@@ -29,10 +29,7 @@ export class UserPrismaCreateRepository implements OutPutUserCreateInterface {
       })
 
       this.logger.log('Output' + JSON.stringify(resultPrisma.email))
-      return {
-        email: reqUserCreate.email,
-        message: 'User created',
-      }
+      return new ResUserCreateDto(reqUserCreate.email, 'User created')
     } catch {
       throw new ExceptionError(new ServerError('create'))
     }

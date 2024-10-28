@@ -1,6 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { ExceptionError } from 'src/common/exceptions'
-import { EmailValidation, ReqUserValidateDto } from '../../application/dtos'
+import {
+  DeletedEmailValidation,
+  ReqUserValidateDto,
+} from '../../application/dtos'
 import { UserValidateDeletePrismaRepository } from '../../infrastructure/repositories'
 
 @Injectable()
@@ -21,7 +24,7 @@ export class UserValidationDeletedService {
 
     if (validationResponse.isValid) {
       this.logger.error('The user already exists')
-      throw new ExceptionError(new EmailValidation())
+      throw new ExceptionError(new DeletedEmailValidation())
     }
   }
 }

@@ -9,6 +9,7 @@ export class ReqUserByEmailDto implements Pick<UserEntity, 'email'> {
 
 export class ResUserByEmailDto {
   public readonly message: string
+
   public readonly data: {
     id: string
     name: string

@@ -39,4 +39,9 @@ export class ReqUserCreateDto
 export class ResUserCreateDto implements Pick<UserEntity, 'email'> {
   public readonly email: string = ''
   public readonly message: string = ''
+
+  public constructor(email: string, message: string) {
+    this.email = email
+    this.message = message
+  }
 }

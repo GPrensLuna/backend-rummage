@@ -9,7 +9,7 @@ import {
 import type { UserEntity } from '../../domain/entities'
 import { DTOS } from './constant'
 
-export class ReqUserUpdateDto
+export class ReqUserUpdate
   implements Pick<UserEntity, 'name' | 'email' | 'password'>
 {
   @IsString()
@@ -31,9 +31,26 @@ export class ReqUserUpdateDto
     message: 'Password must contain at least one uppercase letter',
   })
   @Matches(DTOS.regex.regexSpecial, {
-    message: 'Password must contain at least one special character (!@#$%^&*)',
+    message: `Password must contain at least one special character ${DTOS.regex.regexSpecial}`,
   })
   public readonly password: string = ''
+}
+
+export class ReqUserUpdateDto {
+  public readonly emailQuery: string = ''
+  public readonly data: {
+    name: string
+    email: string
+    password: string
+  }
+
+  public constructor(
+    emailQuery: string,
+    data: { name: string; email: string; password: string },
+  ) {
+    this.emailQuery = emailQuery
+    this.data = data
+  }
 }
 
 export class ResUserUpdateDto implements Pick<UserEntity, 'email'> {

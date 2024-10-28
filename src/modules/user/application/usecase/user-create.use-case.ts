@@ -11,6 +11,7 @@ export class UserCreateUsecase implements InPutUserCreateInterface {
   public constructor(
     @Inject(UserCreateService)
     private readonly userCreateService: UserCreateService,
+
     @Inject(UserValidationEmailService)
     private readonly userValidationEmailService: UserValidationEmailService,
   ) {}

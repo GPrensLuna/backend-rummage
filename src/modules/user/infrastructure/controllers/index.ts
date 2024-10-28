@@ -1,2 +1,5 @@
 export * from './user-by-email.controller'
 export * from './user-create.controller'
+export * from './user-delete.controller'
+export * from './user-get-all.controller'
+export * from './user-update.controller'
