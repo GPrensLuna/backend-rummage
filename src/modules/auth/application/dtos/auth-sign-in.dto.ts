@@ -1,6 +1,9 @@
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator'
+import { UserEntity } from 'src/modules/user/domain/entities'
 
-export class ReqAuthSignInDto {
+export class ReqAuthSignInDto
+  implements Pick<UserEntity, 'email' | 'password'>
+{
   @IsEmail()
   @IsNotEmpty()
   public readonly email: string
@@ -15,7 +18,9 @@ export class ReqAuthSignInDto {
   }
 }
 
-export class ReqAuthSignInBody {
+export class ReqAuthSignInBody
+  implements Pick<UserEntity, 'email' | 'password'>
+{
   @IsEmail()
   @IsNotEmpty()
   public readonly email: string = ''

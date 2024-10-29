@@ -1,13 +1,10 @@
 import { Global, Module } from '@nestjs/common'
-import { JwtSignTokenController } from './infrastructure/controllers'
 import { APP_GUARD, Reflector } from '@nestjs/core'
 import { PassportModule } from '@nestjs/passport'
 import { JwtModule } from '@nestjs/jwt'
 import { jwtConstants } from './infrastructure/costanas'
 import { JwtAuthGuard } from './infrastructure/guards'
-import { JwtSignTokenService } from './domain/services'
 import { JwtSignTokenUseCase } from './application/usecase'
-import { JwtSignTokenRepository } from './infrastructure/repositories'
 
 @Global()
 @Module({
@@ -19,17 +16,14 @@ import { JwtSignTokenRepository } from './infrastructure/repositories'
       signOptions: { expiresIn: '60s' },
     }),
   ],
-  controllers: [JwtSignTokenController],
   providers: [
     JwtSignTokenUseCase,
-    JwtSignTokenService,
-    JwtSignTokenRepository,
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
     },
     Reflector,
   ],
-  exports: [JwtSignTokenService],
+  exports: [JwtSignTokenUseCase],
 })
 export class JwtAccesoModule {}

@@ -1,7 +1,9 @@
+import { ApiTags } from '@nestjs/swagger'
 import { Controller, Get, Logger } from '@nestjs/common'
 import { ResUserGetAllDto } from '../../application/dtos'
 import { UserGetAllUseCase } from '../../application/usecase'
 
+@ApiTags('user')
 @Controller('user')
 export class UserGetAllController {
   private readonly logger = new Logger(UserGetAllController.name)

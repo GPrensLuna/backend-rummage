@@ -6,7 +6,7 @@ import {
   UserValidationNotEmailService,
   UserValidationNotPasswordService,
 } from 'src/modules/user/domain/services'
-import { JwtSignTokenService } from 'src/modules/jwt/domain/services'
+import { JwtSignTokenUseCase } from 'src/modules/jwt/application/usecase'
 import { ReqJwtSignTokenDto } from 'src/modules/jwt/application/dtos'
 import { UserByEmailUseCase } from 'src/modules/user/application/usecase'
 
@@ -26,8 +26,8 @@ export class AuthSignInUseCase {
     @Inject(UserValidationNotPasswordService)
     private readonly userValidationNotPasswordService: UserValidationNotPasswordService,
 
-    @Inject(JwtSignTokenService)
-    private readonly jwtSignTokenService: JwtSignTokenService,
+    @Inject(JwtSignTokenUseCase)
+    private readonly jwtSignTokenService: JwtSignTokenUseCase,
 
     @Inject(UserByEmailUseCase)
     private readonly userByEmailUseCase: UserByEmailUseCase,

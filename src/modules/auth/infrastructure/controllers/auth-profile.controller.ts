@@ -4,7 +4,9 @@ import {
   ResUserDataDto,
   UserDataDto,
 } from '../../application/dtos'
+import { ApiTags } from '@nestjs/swagger'
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthProfileController {
   private readonly logger = new Logger(AuthProfileController.name)

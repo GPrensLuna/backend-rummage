@@ -1,3 +1,4 @@
+import { ApiTags } from '@nestjs/swagger'
 import { Controller, Query, Body, Logger, Patch } from '@nestjs/common'
 import { UserUpdateUseCase } from '../../application/usecase'
 import {
@@ -7,6 +8,7 @@ import {
   ResUserUpdateDto,
 } from '../../application/dtos'
 
+@ApiTags('user')
 @Controller('user')
 export class UserUpdateController {
   private readonly logger = new Logger(UserUpdateController.name)

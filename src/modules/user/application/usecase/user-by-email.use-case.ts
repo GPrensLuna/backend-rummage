@@ -13,6 +13,7 @@ export class UserByEmailUseCase implements InPutUserByEmailInterface {
   public constructor(
     @Inject(UserByEmailService)
     private readonly userByEmailService: UserByEmailService,
+    @Inject(UserValidationNotEmailService)
     private readonly userValidationNotEmailService: UserValidationNotEmailService,
   ) {}
 
@@ -22,6 +23,7 @@ export class UserByEmailUseCase implements InPutUserByEmailInterface {
     this.logger.log('Input' + JSON.stringify(reqUserByEmail))
 
     await this.userValidationNotEmailService.validateNotEmail(reqUserByEmail)
+
     return this.userByEmailService.getUserByEmail(reqUserByEmail)
   }
 }

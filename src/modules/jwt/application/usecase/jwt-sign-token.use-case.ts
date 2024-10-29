@@ -1,28 +1,26 @@
-import { Inject, Injectable, Logger } from '@nestjs/common'
+import { Injectable, Logger } from '@nestjs/common'
 import {
   SignatureError,
   type ReqJwtSignTokenDto,
   type ResJwtSignTokenDto,
 } from '../dtos'
 import { ExceptionError } from '../../../../common/exceptions'
-import { JwtSignTokenService } from '../../domain/services'
+import { JwtService } from '@nestjs/jwt'
 
 @Injectable()
 export class JwtSignTokenUseCase {
   private readonly logger = new Logger(JwtSignTokenUseCase.name)
 
-  public constructor(
-    @Inject(JwtSignTokenService)
-    private readonly jwtSignTokenService: JwtSignTokenService,
-  ) {}
+  public constructor(private readonly jwtService: JwtService) {}
 
   public signToken(reqJwtSignTokenDto: ReqJwtSignTokenDto): ResJwtSignTokenDto {
     try {
-      this.logger.debug('Signing token', reqJwtSignTokenDto)
+      this.logger.log('Signing token', reqJwtSignTokenDto)
+      const token = this.jwtService.sign(reqJwtSignTokenDto.payload)
 
-      return this.jwtSignTokenService.signToken(reqJwtSignTokenDto)
-    } catch (error) {
-      this.logger.error('Error signing token', error)
+      return { accessToken: token }
+    } catch {
+      this.logger.error('Error signing token')
       throw new ExceptionError(new SignatureError())
     }
   }

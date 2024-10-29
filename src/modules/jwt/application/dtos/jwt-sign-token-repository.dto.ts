@@ -1,4 +1,4 @@
-import type { UserEntity } from '../../domain/entities'
+import type { UserEntity } from 'src/modules/user/domain/entities'
 
 export class ReqJwtSignTokenDto {
   public payload: Pick<UserEntity, 'id' | 'email' | 'name'>

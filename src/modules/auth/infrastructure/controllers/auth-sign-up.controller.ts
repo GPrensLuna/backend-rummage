@@ -10,7 +10,9 @@ import {
 import { Public } from '../../../jwt/infrastructure/decorators'
 import { ReqUserCreateDto, ResUserCreateDto } from '../../application/dtos'
 import { UserCreateUsecase } from 'src/modules/user/application/usecase'
+import { ApiTags } from '@nestjs/swagger'
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthSignUpController {
   private readonly logger = new Logger(AuthSignUpController.name)

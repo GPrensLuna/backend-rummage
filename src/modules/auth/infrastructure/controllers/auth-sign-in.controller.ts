@@ -7,11 +7,13 @@ import {
   Post,
   Res,
 } from '@nestjs/common'
-import { ReqAuthSignInBody, ReqAuthSignInDto } from '../../application/dtos'
+import { ReqAuthSignInBody } from '../../application/dtos'
 import { Public } from '../../../jwt/infrastructure/decorators'
 import { AuthSignInUseCase } from '../../application/usecase'
 import { Response } from 'express'
+import { ApiTags } from '@nestjs/swagger'
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthSignInController {
   private readonly logger = new Logger(AuthSignInController.name)
@@ -27,11 +29,6 @@ export class AuthSignInController {
   ): Promise<void> {
     this.logger.log('SignIn : Entrada', reqAuthSignInBody)
 
-    const reqAuthSignInDto = new ReqAuthSignInDto(
-      reqAuthSignInBody.email,
-      reqAuthSignInBody.password,
-    )
-
-    await this.authSignInUseCase.execute(reqAuthSignInDto, res)
+    await this.authSignInUseCase.execute(reqAuthSignInBody, res)
   }
 }
